@@ -132,7 +132,14 @@ public:
             tbb::parallel_sort(keys, keys + table_size);
             auto last = std::unique(keys, keys + table_size);
             table_size = last - keys;
-            std::shuffle(keys, keys + table_size, gen);
+            if(hot_write){
+                std::shuffle(keys, keys + table_size/2, gen);
+                std::shuffle(keys + table_size/2, keys + table_size*3/4, gen);
+                std::shuffle(keys + table_size*3/4, keys + table_size*7/8, gen);
+                std::shuffle(keys + table_size*7/8, keys + table_size, gen);
+            }else{
+                std::shuffle(keys, keys + table_size, gen);
+            }
         }
 
         init_table_size = init_table_ratio * table_size;
@@ -224,9 +231,10 @@ public:
         memory_record = get_boolean_flag(flags, "memory");
         dataset_statistic = get_boolean_flag(flags, "dataset_statistic");
         data_shift = get_boolean_flag(flags, "data_shift");
+        hot_write = get_boolean_flag(flags, "hot_write");
 
         COUT_THIS("[micro] Read:Insert:Update:Scan:Delete= " << read_ratio << ":" << insert_ratio << ":" << update_ratio << ":"
-                                                      << scan_ratio << ":" << delete_ratio);
+                                                             << scan_ratio << ":" << delete_ratio);
         double ratio_sum = read_ratio + insert_ratio + delete_ratio + update_ratio + scan_ratio;
         double insert_delete = insert_ratio + delete_ratio;
         INVARIANT(insert_delete == insert_ratio || insert_delete == delete_ratio);
@@ -260,7 +268,7 @@ public:
                 std::random_shuffle(keys + init_table_size, keys + table_size);
             }
         }
-        
+
         size_t temp_counter = 0;
         for (size_t i = 0; i < operations_num; ++i) {
             auto prob = ratio_dis(gen);
@@ -304,7 +312,7 @@ public:
         printf("Begin running\n");
         auto start_time = tn.rdtsc();
         auto end_time = tn.rdtsc();
-    //    System::profile("perf.data", [&]() {
+        //    System::profile("perf.data", [&]() {
 #pragma omp parallel num_threads(thread_num)
         {
             // thread specifier
@@ -368,7 +376,7 @@ public:
             end_time = tn.rdtsc();
         } // all thread join here
 
-    //    });
+        //    });
         auto diff = tn.tsc2ns(end_time) - tn.tsc2ns(start_time);
         printf("Finish running\n");
 
