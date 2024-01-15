@@ -1,0 +1,2 @@
+/usr/bin/ar qc libWORMHOLEU64.a CMakeFiles/WORMHOLEU64.dir/src/kv.c.o CMakeFiles/WORMHOLEU64.dir/src/lib.c.o CMakeFiles/WORMHOLEU64.dir/src/wh.c.o CMakeFiles/WORMHOLEU64.dir/src/whu64test.c.o
+/usr/bin/ranlib libWORMHOLEU64.a

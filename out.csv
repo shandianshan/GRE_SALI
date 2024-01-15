@@ -1,0 +1,4 @@
+id,read_ratio,insert_ratio,update_ratio,scan_ratio,delete_ratio,key_path,index_type,throughput,init_table_size,memory_consumption,thread_num,min,50 percentile,90 percentile,99 percentile,99.9 percentile,99.99 percentile,max,avg,seed,scan_num,latency_variance,latency_sample,data_shift,pgm,error_bound,table_size
+20231130182207,1,0,0,0,0,./data/covid,sali,212013,20000,0,1,25,285,848,422305,422305,422305,422305,21347.8,1866,100,8.46147e+09,1,0,0,64,20000
+20240113221652,1,0,0,0,0,../GRE/data/fbu,alex,27594199,200,0,1,12,19,57,300,1095,1095,1095,34.7,1866,100,6925.83,1,0,0,64,200
+20240114113308,1,0,0,0,0,../GRE/data/fbu,alex,23420026,200,0,1,12,18,53,726,2312,2312,2312,45.78,1866,100,30315.8,1,0,0,64,200

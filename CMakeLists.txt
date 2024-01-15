@@ -13,19 +13,26 @@ find_package(TBB REQUIRED)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_C_COMPILER "/usr/bin/gcc")
+set(CMAKE_CXX_COMPILER "/usr/bin/g++")
+# set(CMAKE_CXX_COMPILER "/usr/bin/clang++")
+# set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+message("C Compiler: ${CMAKE_C_COMPILER}")
+message("C++ Compiler: ${CMAKE_CXX_COMPILER}")
+
 include_directories(${MKL_INCLUDE_DIRS})
 include_directories(${TBB_INCLUDE_DIRS})
 include_directories(${JEMALLOC_INCLUDE_DIR})
-include_directories(SYSTEM src/competitor/hot/src/libs/hot/commons/include)
-include_directories(SYSTEM src/competitor/hot/src/libs/hot/rowex/include)
-include_directories(SYSTEM src/competitor/hot/src/libs/hot/single-threaded/include)
-include_directories(SYSTEM src/competitor/hot/src/libs/idx/content-helpers/include)
+# include_directories(SYSTEM src/competitor/hot/src/libs/hot/commons/include)
+# include_directories(SYSTEM src/competitor/hot/src/libs/hot/rowex/include)
+# include_directories(SYSTEM src/competitor/hot/src/libs/hot/single-threaded/include)
+# include_directories(SYSTEM src/competitor/hot/src/libs/idx/content-helpers/include)
 
 add_compile_options(-faligned-new -march=native -g -O3)
 
 # add_subdirectory(src/competitor/wormhole)
-add_subdirectory(src/competitor/wormhole_u64)
-add_subdirectory(src/competitor/masstree)
+# add_subdirectory(src/competitor/wormhole_u64)
+# add_subdirectory(src/competitor/masstree)
 
 # microbench
 add_executable(microbench
@@ -35,8 +42,8 @@ add_executable(microbench
 target_link_libraries(microbench
         PRIVATE
         # WORMHOLE
-        WORMHOLEU64
-        MASSTREE
+        # WORMHOLEU64
+        # MASSTREE
 )
 
 target_link_libraries(microbench PUBLIC OpenMP::OpenMP_CXX ${JEMALLOC_LIBRARIES} ${MKL_LIBRARIES} ${TBB_LIBRARIES})
