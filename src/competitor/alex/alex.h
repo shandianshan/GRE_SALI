@@ -34,17 +34,19 @@ void alexInterface<KEY_TYPE, PAYLOAD_TYPE>::bulk_load(std::pair <KEY_TYPE, PAYLO
 
 template<class KEY_TYPE, class PAYLOAD_TYPE>
 bool alexInterface<KEY_TYPE, PAYLOAD_TYPE>::get(KEY_TYPE key, PAYLOAD_TYPE &val, Param *param) {
-  PAYLOAD_TYPE *res = index.get_payload(key);
-  if (res != nullptr) {
-    val = *res;
-    return true;
-  }
-  return false;
+  // PAYLOAD_TYPE *res = index.get_payload(key);
+  // if (res != nullptr) {
+  //   val = *res;
+  //   return true;
+  // }
+  // return false;
+  return index.get_payload_sali(key,val);
 }
 
 template<class KEY_TYPE, class PAYLOAD_TYPE>
 bool alexInterface<KEY_TYPE, PAYLOAD_TYPE>::put(KEY_TYPE key, PAYLOAD_TYPE value, Param *param) {
-  return index.insert(key, value).second;
+  // return index.insert(key, value).second;
+  return index.insert_sali(key,value);
 }
 
 template<class KEY_TYPE, class PAYLOAD_TYPE>
@@ -55,19 +57,21 @@ bool alexInterface<KEY_TYPE, PAYLOAD_TYPE>::update(KEY_TYPE key, PAYLOAD_TYPE va
 
 template<class KEY_TYPE, class PAYLOAD_TYPE>
 bool alexInterface<KEY_TYPE, PAYLOAD_TYPE>::remove(KEY_TYPE key, Param *param) {
-  auto num_erase = index.erase(key);
-  return num_erase > 0;
+  // auto num_erase = index.erase(key);
+  // return num_erase > 0;
+  return false;
 }
 
 template<class KEY_TYPE, class PAYLOAD_TYPE>
 size_t alexInterface<KEY_TYPE, PAYLOAD_TYPE>::scan(KEY_TYPE key_low_bound, size_t key_num,
                                                    std::pair<KEY_TYPE, PAYLOAD_TYPE> *result,
                                                    Param *param) {
-  auto iter = index.lower_bound(key_low_bound);
-  int scan_size = 0;
-  for (scan_size = 0; scan_size < key_num && !iter.is_end(); scan_size++) {
-    result[scan_size] = {(*iter).first, (*iter).second};
-    iter++;
-  }
-  return scan_size;
+  // auto iter = index.lower_bound(key_low_bound);
+  // int scan_size = 0;
+  // for (scan_size = 0; scan_size < key_num && !iter.is_end(); scan_size++) {
+  //   result[scan_size] = {(*iter).first, (*iter).second};
+  //   iter++;
+  // }
+  // return scan_size;
+  return 0;
 }

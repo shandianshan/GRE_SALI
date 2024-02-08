@@ -1,5 +1,6 @@
 #include"./src/src/core/sali.h"
 #include"../indexInterface.h"
+#pragma once
 
 template<class KEY_TYPE, class PAYLOAD_TYPE>
 class SALIInterface : public indexInterface<KEY_TYPE, PAYLOAD_TYPE> {
